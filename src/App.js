@@ -1,9 +1,12 @@
 import React from 'react';
+import BodyComponent from './components/body/BodyComponent';
+import HeaderComponent from './components/header/HeaderComponent';
 
 function App() {
   return (
-    <div>
-      <h1 className='text-center bg-danger'>Agregando Bootstrap</h1>
+    <div className='container-fluid'>
+      <HeaderComponent />
+      <BodyComponent />
     </div>
   );
 }
