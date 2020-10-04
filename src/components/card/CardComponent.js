@@ -1,45 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
 import './CardComponent.css';
 
-const CardComponent = ({ imageBase64, title, level }) => {
-  const progressBarStyles = (percentage) => {
-    let color = 'red';
-
-    if (percentage >= 70 && percentage < 80) {
-      color = '#d5ba31';
-    }
-
-    if (percentage >= 80) {
-      color = 'green';
-    }
-
-    return buildStyles({
-      pathColor: color,
-      textColor: color,
-    });
-  };
-
+const CardComponent = ({ imageBase64, title }) => {
   return (
     <div className='card'>
-      <img
-        src={imageBase64}
-        className='card-img-top'
-        alt='Imagen'
-        height='100px'
-      />
-      <div className='card-body text-center'>
+      <div className='p-3 pb-0'>
+        <img src={imageBase64} className='card-img-top img' alt='Imagen' />
+      </div>
+
+      <div className='col d-flex align-items-center justify-content-center card-body text-center'>
         <h5 className='card-title mb-0'>{title}</h5>
-        <span>Conocimiento</span>
-        <p></p>
-        <CircularProgressbar
-          value={level}
-          text={`${level}%`}
-          className='progress-barr'
-          styles={progressBarStyles(level)}
-        />
       </div>
     </div>
   );
@@ -48,7 +19,6 @@ const CardComponent = ({ imageBase64, title, level }) => {
 CardComponent.propTypes = {
   title: PropTypes.string.isRequired,
   imageBase64: PropTypes.string.isRequired,
-  level: PropTypes.number.isRequired,
 };
 
 export default CardComponent;

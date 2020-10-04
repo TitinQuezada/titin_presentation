@@ -87,7 +87,7 @@ const BodyComponent = () => {
     },
   ];
   return (
-    <div className='row mt-3'>
+    <div className='row mt-3 mb-3 mb-sm-0'>
       <div className='col'>
         <div className='row justify-content-center'>
           <h5>Lenguajes de programacion</h5>
@@ -95,7 +95,10 @@ const BodyComponent = () => {
 
         <div className='row'>
           {languajes.map((languaje) => (
-            <div className='col-12 col-sm-3 mt-3' key={languaje.id}>
+            <div
+              className='col-12 col-sm-6 col-md-5 col-lg-4 col-xl-3 mt-3'
+              key={languaje.id}
+            >
               <CardComponent
                 title={languaje.name}
                 level={languaje.level}
@@ -115,10 +118,12 @@ const BodyComponent = () => {
 
         <div className='row'>
           {frameworks.map((framework) => (
-            <div className='col-12 col-sm-3 mt-3' key={framework.id}>
+            <div
+              className='col-12 col-sm-6 col-md-5 col-lg-4 col-xl-3 mt-3'
+              key={framework.id}
+            >
               <CardComponent
                 title={framework.name}
-                level={framework.level}
                 imageBase64={framework.image}
               />
             </div>

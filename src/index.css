@@ -3,3 +3,7 @@
 body {
   background-color: #ececec;
 }
+
+.page-link:hover {
+  cursor: pointer;
+}

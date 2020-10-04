@@ -1,12 +1,16 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { navigateToUrl } from '../../helpers/navigationHelper';
 import './HeaderComponent.css';
 
 const HeaderComponent = () => {
+  const history = useHistory();
+
   return (
     <div className='row pb-3 pt-3 pl-3 pl-sm-0 pr-3 pr-sm-5 bg-primary'>
       <div className='col align-self-center d-flex justify-content-center'>
         <img
+          onClick={() => history.push('/login')}
           className='rounded-circle'
           height='100vh'
           alt='Foto de Titin'
