@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PaginationComponent from '../../pagination/PaginationComponent';
 import './LanguajesTable.css';
 
 const LanguajesTable = ({ className }) => {
-  const [actualPage, setActualPage] = useState(5);
-
   const languajes = [
     {
       id: 1,
@@ -38,20 +36,12 @@ const LanguajesTable = ({ className }) => {
     },
   ];
 
-  const nextPage = () => {
-    setActualPage(actualPage + 1);
-  };
-
-  const previousPage = () => {
-    setActualPage(actualPage - 1);
-  };
-
-  const onPageClick = (page) => {
-    setActualPage(page);
+  const getPage = (page) => {
+    console.log(`obteniendo datos de la pagina ${page}`);
   };
 
   return (
-    <>
+    <React.Fragment>
       <div className={`row ${className}`}>
         <div className='col-6'>
           <div className='input-group mb-3'>
@@ -68,7 +58,7 @@ const LanguajesTable = ({ className }) => {
           <button className='btn btn-outline-primary btn-block'>Agregar</button>
         </div>
 
-        <div className='col-12 p-0'>
+        <div className='col-12'>
           <table className='table table-sm'>
             <thead>
               <tr className='bg-primary text-white'>
@@ -80,21 +70,26 @@ const LanguajesTable = ({ className }) => {
             <tbody>
               {languajes.map((languaje) => (
                 <tr key={languaje.id}>
-                  <td>{languaje.name}</td>
-                  <td>
+                  <td className='vertical-aling-center'>{languaje.name}</td>
+                  <td className='vertical-aling-center'>
                     <img
-                      height='50px'
-                      width='50px'
+                      height='50vh'
+                      width='50vh'
                       src={languaje.image}
                       alt={`${languaje.name}`}
                     />
                   </td>
-                  <td>
-                    <div>
-                      <button className='btn btn-outline-info mr-3'>
-                        Editar
-                      </button>
-                      <button className='btn btn-outline-danger'>Borrar</button>
+                  <td className='vertical-aling-center'>
+                    <div className='row'>
+                      <div className='col'>
+                        <button className='btn btn-outline-info mr-3'>
+                          <i className='far fa-edit'></i>
+                        </button>
+
+                        <button className='btn btn-outline-danger'>
+                          <i className='far fa-trash-alt'></i>
+                        </button>
+                      </div>
                     </div>
                   </td>
                 </tr>
@@ -110,13 +105,11 @@ const LanguajesTable = ({ className }) => {
       </div>
 
       <PaginationComponent
-        pagesNumber={40}
-        actualPage={actualPage}
-        nextPageFunction={nextPage}
-        previousPageFunction={previousPage}
-        onPageClick={onPageClick}
+        pagesNumber={7}
+        registerPerPage={10}
+        onChange={getPage}
       />
-    </>
+    </React.Fragment>
   );
 };
 

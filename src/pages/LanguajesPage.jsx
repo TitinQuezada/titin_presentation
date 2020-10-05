@@ -9,9 +9,11 @@ const LanguajesPage = () => {
   return (
     <React.Fragment>
       <NavbarComponent
-        title='BackOffice'
+        title='Home'
         onClick={() => history.push('/back-office')}
       />
+
+      <h4 className='text-center mt-3'>Mantenimiento de lenguajes</h4>
 
       <LanguajesTable className='mt-5' />
     </React.Fragment>
