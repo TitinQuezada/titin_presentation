@@ -105,7 +105,7 @@ const LanguajesTable = ({ className }) => {
       </div>
 
       <PaginationComponent
-        pagesNumber={7}
+        pagesNumber={10}
         registerPerPage={10}
         onChange={getPage}
       />

@@ -10,22 +10,92 @@ const PaginationComponent = ({ pagesNumber, registerPerPage, onChange }) => {
 
   const createPaginationButtons = () => {
     const pageLinks = [];
+    let pageLink;
 
     for (let page = 1; page <= pagesNumber; page++) {
       const margin = page === pagesNumber ? 'mr-0' : 'mr-2';
       const linkStyle = page === actualPage ? 'bg-primary text-white' : '';
 
-      const pageLink = (
-        <button
-          key={page}
-          className={`btn btn-outline-primary btn-sm ${margin} ${linkStyle}`}
-          onClick={() => changePage(page)}
-        >
-          {page}
-        </button>
-      );
+      if (actualPage < 4) {
 
-      pageLinks.push(pageLink);
+        if(page <= 4 || page === lastPage)
+        {
+          pageLink = (
+            <button
+              key={page}
+              className={`btn btn-outline-primary btn-sm ${margin} ${linkStyle}`}
+              onClick={() => changePage(page)}
+            >
+              {page}
+            </button>
+          );
+  
+          pageLinks.push(pageLink);
+        }
+
+        if(page === lastPage - 1)
+        {
+          pageLink = (
+           <span key={page} className={margin}>...</span>
+          );
+  
+          pageLinks.push(pageLink);
+        }
+      }
+
+      if (actualPage >= 4 && actualPage < lastPage - 2) {
+
+        if(page === firstPage + 1 || page === lastPage - 1)
+        {
+          pageLink = (
+            <span key={page} className={margin}>...</span>
+           );
+   
+           pageLinks.push(pageLink);
+        }
+        else if(page === actualPage || page === firstPage || page === actualPage + 1 || page === actualPage - 1 || page === lastPage)
+        {
+          pageLink = (
+            <button
+              key={page}
+              className={`btn btn-outline-primary btn-sm ${margin} ${linkStyle}`}
+              onClick={() => changePage(page)}
+            >
+              {page}
+            </button>
+          );
+  
+          pageLinks.push(pageLink);
+        }
+
+      }
+
+      if (actualPage >= lastPage - 2) {
+
+        if(page >= lastPage - 3 || page === firstPage)
+        {
+          pageLink = (
+            <button
+              key={page}
+              className={`btn btn-outline-primary btn-sm ${margin} ${linkStyle}`}
+              onClick={() => changePage(page)}
+            >
+              {page}
+            </button>
+          );
+  
+          pageLinks.push(pageLink);
+        }
+
+        if(page === firstPage + 1)
+        {
+          pageLink = (
+           <span key={page} className={margin}>...</span>
+          );
+  
+          pageLinks.push(pageLink);
+        }
+      }
     }
 
     setPageLinks(pageLinks);
