@@ -6,7 +6,7 @@ const CardComponent = ({ imageBase64, title }) => {
   return (
     <div className='card'>
       <div className='p-3 pb-0'>
-        <img src={imageBase64} className='card-img-top img' alt='Imagen' />
+        <img src={imageBase64} className='card-img-top' alt='Imagen' />
       </div>
 
       <div className='col d-flex align-items-center justify-content-center card-body text-center'>

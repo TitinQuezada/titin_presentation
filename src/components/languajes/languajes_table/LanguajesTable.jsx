@@ -73,8 +73,7 @@ const LanguajesTable = ({ className }) => {
                   <td className='vertical-aling-center'>{languaje.name}</td>
                   <td className='vertical-aling-center'>
                     <img
-                      height='50vh'
-                      width='50vh'
+                      width='100vh'
                       src={languaje.image}
                       alt={`${languaje.name}`}
                     />
@@ -105,7 +104,7 @@ const LanguajesTable = ({ className }) => {
       </div>
 
       <PaginationComponent
-        pagesNumber={10}
+        pagesNumber={100}
         registerPerPage={10}
         onChange={getPage}
       />

@@ -18,7 +18,7 @@ const PaginationComponent = ({ pagesNumber, registerPerPage, onChange }) => {
 
       if (actualPage < 4) {
 
-        if(page <= 4 || page === lastPage)
+        if(page <= 5 || page === lastPage)
         {
           pageLink = (
             <button
@@ -72,7 +72,7 @@ const PaginationComponent = ({ pagesNumber, registerPerPage, onChange }) => {
 
       if (actualPage >= lastPage - 2) {
 
-        if(page >= lastPage - 3 || page === firstPage)
+        if(page >= lastPage - 4 || page === firstPage)
         {
           pageLink = (
             <button
