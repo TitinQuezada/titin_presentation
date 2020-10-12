@@ -8,97 +8,73 @@ const PaginationComponent = ({ pagesNumber, registerPerPage, onChange }) => {
   const [actualPage, setActualPage] = useState(firstPage);
   const [pageLinks, setPageLinks] = useState([]);
 
+  const getPageButton = (page, styles) => (
+    <button
+      key={page}
+      className={`btn btn-outline-primary btn-sm ${styles.margin} ${styles.linkStyle}`}
+      onClick={() => changePage(page)}
+    >
+      {page}
+    </button>
+  );
+
+  const getEllipsis = (page, margin) => <span key={page} className={margin}>...</span>;
+
+  const metodo1 = (page, styles) => {
+    if (page <= 5 || page === lastPage) {
+      return getPageButton(page, styles)
+    }
+
+    if (page === lastPage - 1) {
+      return getEllipsis(page, styles.margin);
+    }
+  };
+
+  const metodo2 = (page, styles) => {
+    if (page === firstPage + 1 || page === lastPage - 1) {
+      return getEllipsis(page, styles.margin);
+    }
+    else if (page === actualPage || page === firstPage || page === actualPage + 1 || page === actualPage - 1 || page === lastPage) {
+      return getPageButton(page, styles)
+    }
+  };
+
+  const metodo3 = (page, styles) => {
+    if (page >= lastPage - 4 || page === firstPage) {
+      return getPageButton(page, styles)
+    }
+
+    if (page === firstPage + 1) {
+      return getEllipsis(page, styles.margin);
+    }
+  };
+
+
   const createPaginationButtons = () => {
-    const pageLinks = [];
-    let pageLink;
+    const pageButtons = [];
 
     for (let page = 1; page <= pagesNumber; page++) {
       const margin = page === pagesNumber ? 'mr-0' : 'mr-2';
       const linkStyle = page === actualPage ? 'bg-primary text-white' : '';
+      const styles = { margin, linkStyle };
 
       if (actualPage < 4) {
-
-        if(page <= 5 || page === lastPage)
-        {
-          pageLink = (
-            <button
-              key={page}
-              className={`btn btn-outline-primary btn-sm ${margin} ${linkStyle}`}
-              onClick={() => changePage(page)}
-            >
-              {page}
-            </button>
-          );
-  
-          pageLinks.push(pageLink);
-        }
-
-        if(page === lastPage - 1)
-        {
-          pageLink = (
-           <span key={page} className={margin}>...</span>
-          );
-  
-          pageLinks.push(pageLink);
-        }
+        const pageLink = metodo1(page, styles)
+        pageButtons.push(pageLink);
       }
 
       if (actualPage >= 4 && actualPage < lastPage - 2) {
-
-        if(page === firstPage + 1 || page === lastPage - 1)
-        {
-          pageLink = (
-            <span key={page} className={margin}>...</span>
-           );
-   
-           pageLinks.push(pageLink);
-        }
-        else if(page === actualPage || page === firstPage || page === actualPage + 1 || page === actualPage - 1 || page === lastPage)
-        {
-          pageLink = (
-            <button
-              key={page}
-              className={`btn btn-outline-primary btn-sm ${margin} ${linkStyle}`}
-              onClick={() => changePage(page)}
-            >
-              {page}
-            </button>
-          );
-  
-          pageLinks.push(pageLink);
-        }
-
+        const pageLink = metodo2(page, styles)
+        pageButtons.push(pageLink);
       }
 
       if (actualPage >= lastPage - 2) {
-
-        if(page >= lastPage - 4 || page === firstPage)
-        {
-          pageLink = (
-            <button
-              key={page}
-              className={`btn btn-outline-primary btn-sm ${margin} ${linkStyle}`}
-              onClick={() => changePage(page)}
-            >
-              {page}
-            </button>
-          );
-  
-          pageLinks.push(pageLink);
-        }
-
-        if(page === firstPage + 1)
-        {
-          pageLink = (
-           <span key={page} className={margin}>...</span>
-          );
-  
-          pageLinks.push(pageLink);
-        }
+        const pageLink = metodo3(page, styles)
+        pageButtons.push(pageLink);
       }
     }
 
-    setPageLinks(pageLinks);
+    setPageLinks(pageButtons);
   };
 
   const changePage = (page) => {

@@ -96,7 +96,7 @@ const BodyComponent = () => {
         <div className='row'>
           {languajes.map((languaje) => (
             <div
-              className='col-12 col-sm-6 col-md-5 col-lg-4 col-xl-3 mt-3'
+              className='col-6 col-md-5 col-lg-4 col-xl-3 mt-3'
               key={languaje.id}
             >
               <CardComponent
@@ -119,7 +119,7 @@ const BodyComponent = () => {
         <div className='row'>
           {frameworks.map((framework) => (
             <div
-              className='col-12 col-sm-6 col-md-5 col-lg-4 col-xl-3 mt-3'
+              className='col-6 col-md-5 col-lg-4 col-xl-3 mt-3'
               key={framework.id}
             >
               <CardComponent

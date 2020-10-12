@@ -73,7 +73,7 @@ const LanguajesTable = ({ className }) => {
                   <td className='vertical-aling-center'>{languaje.name}</td>
                   <td className='vertical-aling-center'>
                     <img
-                      width='100vh'
+                      width='60vh'
                       src={languaje.image}
                       alt={`${languaje.name}`}
                     />
