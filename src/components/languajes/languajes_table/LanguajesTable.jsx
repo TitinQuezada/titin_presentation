@@ -2,7 +2,8 @@ import React from 'react';
 import PaginationComponent from '../../pagination/PaginationComponent';
 import './LanguajesTable.css';
 
-const LanguajesTable = ({ className }) => {
+const LanguajesTable = () => {
+
   const languajes = [
     {
       id: 1,
@@ -42,22 +43,7 @@ const LanguajesTable = ({ className }) => {
 
   return (
     <React.Fragment>
-      <div className={`row ${className}`}>
-        <div className='col-6'>
-          <div className='input-group mb-3'>
-            <input type='text' className='form-control' placeholder='Buscar' />
-            <div className='input-group-append'>
-              <button className='btn btn-outline-secondary'>
-                <i className='fas fa-search'></i>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div className='col-6'>
-          <button className='btn btn-outline-primary btn-block'>Agregar</button>
-        </div>
-
+      <div className='row'>
         <div className='col-12'>
           <table className='table table-sm'>
             <thead>
@@ -71,6 +57,7 @@ const LanguajesTable = ({ className }) => {
               {languajes.map((languaje) => (
                 <tr key={languaje.id}>
                   <td className='vertical-aling-center'>{languaje.name}</td>
+
                   <td className='vertical-aling-center'>
                     <img
                       width='60vh'
@@ -78,6 +65,7 @@ const LanguajesTable = ({ className }) => {
                       alt={`${languaje.name}`}
                     />
                   </td>
+
                   <td className='vertical-aling-center'>
                     <div className='row'>
                       <div className='col'>
@@ -108,6 +96,7 @@ const LanguajesTable = ({ className }) => {
         registerPerPage={10}
         onChange={getPage}
       />
+
     </React.Fragment>
   );
 };

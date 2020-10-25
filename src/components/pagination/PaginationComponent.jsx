@@ -11,7 +11,7 @@ const PaginationComponent = ({ pagesNumber, registerPerPage, onChange }) => {
   const getPageButton = (page, styles) => (
     <button
       key={page}
-      className={`btn btn-outline-primary btn-sm ${styles.margin} ${styles.linkStyle}`}
+      className={`btn btn-outline-primary btn-sm ${styles.margin} ${styles.buttonStyle}`}
       onClick={() => changePage(page)}
     >
       {page}
@@ -20,7 +20,7 @@ const PaginationComponent = ({ pagesNumber, registerPerPage, onChange }) => {
 
   const getEllipsis = (page, margin) => <span key={page} className={margin}>...</span>;
 
-  const metodo1 = (page, styles) => {
+  const getFirstFiveButtons = (page, styles) => {
     if (page <= 5 || page === lastPage) {
       return getPageButton(page, styles)
     }
@@ -30,7 +30,7 @@ const PaginationComponent = ({ pagesNumber, registerPerPage, onChange }) => {
     }
   };
 
-  const metodo2 = (page, styles) => {
+  const getCenterButtons = (page, styles) => {
     if (page === firstPage + 1 || page === lastPage - 1) {
       return getEllipsis(page, styles.margin);
     }
@@ -39,7 +39,7 @@ const PaginationComponent = ({ pagesNumber, registerPerPage, onChange }) => {
     }
   };
 
-  const metodo3 = (page, styles) => {
+  const getLastFiveButtons = (page, styles) => {
     if (page >= lastPage - 4 || page === firstPage) {
       return getPageButton(page, styles)
     }
@@ -55,21 +55,21 @@ const PaginationComponent = ({ pagesNumber, registerPerPage, onChange }) => {
 
     for (let page = 1; page <= pagesNumber; page++) {
       const margin = page === pagesNumber ? 'mr-0' : 'mr-2';
-      const linkStyle = page === actualPage ? 'bg-primary text-white' : '';
-      const styles = { margin, linkStyle };
+      const buttonStyle = page === actualPage ? 'bg-primary text-white' : '';
+      const styles = { margin, buttonStyle };
 
       if (actualPage < 4) {
-        const pageLink = metodo1(page, styles)
+        const pageLink = getFirstFiveButtons(page, styles)
         pageButtons.push(pageLink);
       }
 
       if (actualPage >= 4 && actualPage < lastPage - 2) {
-        const pageLink = metodo2(page, styles)
+        const pageLink = getCenterButtons(page, styles)
         pageButtons.push(pageLink);
       }
 
       if (actualPage >= lastPage - 2) {
-        const pageLink = metodo3(page, styles)
+        const pageLink = getLastFiveButtons(page, styles)
         pageButtons.push(pageLink);
       }
     }
