@@ -3,6 +3,8 @@ import { useHistory } from 'react-router-dom';
 import CreateLanguajeDialog from '../components/languajes/create_languaje/CreateLanguajeDialog';
 import LanguajesTable from '../components/languajes/languajes_table/LanguajesTable';
 import NavbarComponent from '../components/navbar/NavbarComponent';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const LanguajesPage = () => {
   const history = useHistory();
@@ -22,8 +24,8 @@ const LanguajesPage = () => {
           <div className='input-group mb-3'>
             <input type='text' className='form-control' placeholder='Buscar' />
 
-            <div className={createLanguaje ? '' : 'input-group-append'}>
-              <button className='btn btn-outline-secondary'>
+            <div className='input-group-append'>
+              <button className='btn btn-outline-secondary input-group-text'>
                 <i className='fas fa-search'></i>
               </button>
             </div>
@@ -37,7 +39,9 @@ const LanguajesPage = () => {
 
       <LanguajesTable />
 
-      <CreateLanguajeDialog isOpen={createLanguaje} close={() => setCreateLanguaje(false)} />
+      <CreateLanguajeDialog isOpen={createLanguaje} close={() => setCreateLanguaje(false)} toast={toast} />
+
+      <ToastContainer />
 
     </React.Fragment>
   );

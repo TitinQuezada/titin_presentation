@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import './CreateLanguajeDialog.css'
 import { useState } from 'react';
 
-const CreateLanguajeDialog = ({ isOpen, close }) => {
+
+const CreateLanguajeDialog = ({ isOpen, close, toast }) => {
     Modal.setAppElement('#root');
 
     const defaultImageName = 'Buscar';
@@ -22,8 +23,9 @@ const CreateLanguajeDialog = ({ isOpen, close }) => {
             bottom: 'auto',
             marginRight: '-50%',
             transform: 'translate(-50%, -50%)',
-            borderRadius: '20px'
-        }
+            borderRadius: '20px',
+        },
+        overlay: { zIndex: '2' }
     };
 
     const openBrowser = () => {
@@ -52,7 +54,11 @@ const CreateLanguajeDialog = ({ isOpen, close }) => {
 
     const createLanguaje = () => {
         validateForm();
+
+        // codigo para crear un lenguaje en la base de datos
         console.log({ name, image });
+        toast.success('Se ha creado el lenguaje con exito!');
+        toast.error('No se pudo crear el lenguaje , tal cosa invalida');
     };
 
     const validateForm = () => {
@@ -70,14 +76,13 @@ const CreateLanguajeDialog = ({ isOpen, close }) => {
         setImageError(imageError);
     };
 
-    const closeModal = () => {
+    const cleanModal = () => {
         setnameError('');
         setImageError('');
-        close();
     }
 
     return (
-        <Modal isOpen={isOpen} style={modalStyles}>
+        <Modal isOpen={isOpen} style={modalStyles} onAfterClose={cleanModal}>
             <h4 className='text-center mb-3'>Crear lenguaje</h4>
             <div className="form-group">
                 <label>Nombre</label>
@@ -103,7 +108,7 @@ const CreateLanguajeDialog = ({ isOpen, close }) => {
 
             <div className="row mt-5">
                 <div className="col-12 d-flex justify-content-end">
-                    <button className="btn btn-danger mr-3" onClick={closeModal}>Cancelar</button>
+                    <button className="btn btn-danger mr-3" onClick={close}>Cancelar</button>
                     <button className="btn btn-primary" onClick={createLanguaje}>Agregar</button>
                 </div>
             </div>
