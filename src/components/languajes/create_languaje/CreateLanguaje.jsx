@@ -1,13 +1,12 @@
 import React, { useRef } from 'react';
-import Modal from 'react-modal';
-import PropTypes from 'prop-types';
-import './CreateLanguajeDialog.css'
+import './CreateLanguaje.css'
 import { useState } from 'react';
+import { toast } from 'react-toastify';
+import PropTypes from 'prop-types';
+import { AddDocument } from '../../../helpers/CloudFireStoreHelper';
+import { Collections } from '../../../enums/collections';
 
-
-const CreateLanguajeDialog = ({ isOpen, close, toast }) => {
-    Modal.setAppElement('#root');
-
+const CreateLanguaje = ({ cancel }) => {
     const defaultImageName = 'Buscar';
     const fileInputRef = useRef();
     const [imageName, setImageName] = useState(defaultImageName);
@@ -15,18 +14,6 @@ const CreateLanguajeDialog = ({ isOpen, close, toast }) => {
     const [image, setImage] = useState();
     const [nameError, setnameError] = useState('');
     const [imageError, setImageError] = useState('');
-    const modalStyles = {
-        content: {
-            top: '50%',
-            left: '50%',
-            right: 'auto',
-            bottom: 'auto',
-            marginRight: '-50%',
-            transform: 'translate(-50%, -50%)',
-            borderRadius: '20px',
-        },
-        overlay: { zIndex: '2' }
-    };
 
     const openBrowser = () => {
         fileInputRef.current.click();
@@ -52,37 +39,56 @@ const CreateLanguajeDialog = ({ isOpen, close, toast }) => {
         }
     };
 
-    const createLanguaje = () => {
-        validateForm();
+    const createLanguaje = async () => {
+        const isFormValid = validateForm();
 
-        // codigo para crear un lenguaje en la base de datos
-        console.log({ name, image });
-        toast.success('Se ha creado el lenguaje con exito!');
-        toast.error('No se pudo crear el lenguaje , tal cosa invalida');
+        if (isFormValid) {
+            try {
+                const languaje = buildLanguaje();
+                await AddDocument(Collections.languajes, languaje);
+                toast.success('Se ha creado el lenguaje con exito!');
+            } catch (error) {
+                toast.error('Ha ocurrido un error creando el lenguaje en Firebase');
+            }
+        }
     };
 
+    const buildLanguaje = () => {
+        const languaje = {
+            name,
+            image
+        }
+
+        return languaje;
+    }
+
     const validateForm = () => {
-        validateName();
-        validateImage();
+        const isValidName = validateName();
+        const isValidImage = validateImage();
+
+        if (isValidName && isValidImage) {
+            return true;
+        }
+
+        return false;
     };
 
     const validateName = () => {
         const nameError = name ? '' : 'El nombre del lenguaje es requerido';
         setnameError(nameError);
+
+        return nameError ? false : true;
     };
 
     const validateImage = () => {
         const imageError = imageName === defaultImageName ? 'La imagen del lenguaje es requerida' : '';
         setImageError(imageError);
+
+        return imageError ? false : true;
     };
 
-    const cleanModal = () => {
-        setnameError('');
-        setImageError('');
-    }
-
     return (
-        <Modal isOpen={isOpen} style={modalStyles} onAfterClose={cleanModal}>
+        <React.Fragment>
             <h4 className='text-center mb-3'>Crear lenguaje</h4>
             <div className="form-group">
                 <label>Nombre</label>
@@ -108,17 +114,16 @@ const CreateLanguajeDialog = ({ isOpen, close, toast }) => {
 
             <div className="row mt-5">
                 <div className="col-12 d-flex justify-content-end">
-                    <button className="btn btn-danger mr-3" onClick={close}>Cancelar</button>
+                    <button className="btn btn-danger mr-3" onClick={cancel}>Cancelar</button>
                     <button className="btn btn-primary" onClick={createLanguaje}>Agregar</button>
                 </div>
             </div>
-        </Modal>
+        </React.Fragment>
     );
 }
 
-CreateLanguajeDialog.propTypes = {
-    isOpen: PropTypes.bool.isRequired,
-    close: PropTypes.func.isRequired
-};
+CreateLanguaje.propTypes = {
+    cancel: PropTypes.func.isRequired
+}
 
-export default CreateLanguajeDialog;
+export default CreateLanguaje;

@@ -1,14 +1,23 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import CreateLanguajeDialog from '../components/languajes/create_languaje/CreateLanguajeDialog';
+import CreateLanguaje from '../components/languajes/create_languaje/CreateLanguaje';
 import LanguajesTable from '../components/languajes/languajes_table/LanguajesTable';
 import NavbarComponent from '../components/navbar/NavbarComponent';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { DialogContext } from '../context/DialogContext';
 
 const LanguajesPage = () => {
   const history = useHistory();
-  const [createLanguaje, setCreateLanguaje] = useState(false)
+  const { setModalContent, setIsModalOpen } = useContext(DialogContext)
+
+  const openCreateLanguajeDialog = () => {
+    setModalContent(<CreateLanguaje cancel={closeCreateLanguajeDialog} />)
+
+    setIsModalOpen(true);
+  };
+
+  const closeCreateLanguajeDialog = () => {
+    setIsModalOpen(false);
+  }
 
   return (
     <React.Fragment>
@@ -33,16 +42,11 @@ const LanguajesPage = () => {
         </div>
 
         <div className='col-6'>
-          <button className='btn btn-outline-primary btn-block' onClick={() => setCreateLanguaje(true)}>Agregar</button>
+          <button className='btn btn-outline-primary btn-block' onClick={openCreateLanguajeDialog}>Agregar</button>
         </div>
       </div>
 
-      <LanguajesTable />
-
-      <CreateLanguajeDialog isOpen={createLanguaje} close={() => setCreateLanguaje(false)} toast={toast} />
-
-      <ToastContainer />
-
+      <LanguajesTable registerPerPage={10} />
     </React.Fragment>
   );
 };
