@@ -7,10 +7,10 @@ import { DialogContext } from '../context/DialogContext';
 
 const LanguajesPage = () => {
   const history = useHistory();
-  const { setModalContent, setIsModalOpen } = useContext(DialogContext)
+  const { setModalContent, setIsModalOpen } = useContext(DialogContext);
 
   const openCreateLanguajeDialog = () => {
-    setModalContent(<CreateLanguaje cancel={closeCreateLanguajeDialog} />)
+    setModalContent(<CreateLanguaje cancel={closeCreateLanguajeDialog} />);
 
     setIsModalOpen(true);
   };
@@ -46,7 +46,7 @@ const LanguajesPage = () => {
         </div>
       </div>
 
-      <LanguajesTable registerPerPage={1} />
+      <LanguajesTable></LanguajesTable>
     </React.Fragment>
   );
 };

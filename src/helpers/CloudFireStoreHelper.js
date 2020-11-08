@@ -38,5 +38,12 @@ export const AddDocument = async (collectionName, document) => {
 
 export const UpdateDocument = () => { };
 
-export const DeleteDocument = () => { };
+export const DeleteDocument = async (collectionName, documentId) => {
+    const documentReference = firebase.firestore().collection(collectionName).doc(documentId);
+    const document = await documentReference.get();
+
+    if (document.exists) {
+        await documentReference.delete();
+    }
+};
 

@@ -6,7 +6,7 @@ import { DialogContext } from '../../context/DialogContext';
 const Dialog = () => {
     Modal.setAppElement('#root');
 
-    const { modalContent, isModalOpen } = useContext(DialogContext)
+    const { modalContent, isModalOpen, modalClass } = useContext(DialogContext)
 
     const modalStyles = {
         content: {
@@ -17,6 +17,7 @@ const Dialog = () => {
             marginRight: '-50%',
             transform: 'translate(-50%, -50%)',
             borderRadius: '20px',
+            ...modalClass
         },
         overlay: { zIndex: '2' }
     };

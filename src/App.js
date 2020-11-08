@@ -7,23 +7,28 @@ import LoginPage from './pages/LoginPage';
 import { ToastContainer } from 'react-toastify';
 import DialogProvider from './context/DialogContext';
 import Dialog from './components/dialog/Dialog';
+import LoadingProvider from './context/LoadingContext';
+import Loading from './components/loading/Loading';
 
 
 function App() {
   return (
-    <DialogProvider>
-      <div className='container-fluid'>
-        <Router>
-          <Route exact path='/' component={HomePage} />
-          <Route path='/login' component={LoginPage} />
-          <Route exact path='/back-office' component={BackOfficePage} />
-          <Route path='/back-office/languajes' component={LanguajesPage} />
-        </Router>
+    <LoadingProvider>
+      <DialogProvider>
+        <div className='container-fluid'>
+          <Router>
+            <Route exact path='/' component={HomePage} />
+            <Route path='/login' component={LoginPage} />
+            <Route exact path='/back-office' component={BackOfficePage} />
+            <Route path='/back-office/languajes' component={LanguajesPage} />
+          </Router>
 
-        <Dialog />
-        <ToastContainer />
-      </div>
-    </DialogProvider>
+          <Dialog />
+          <Loading />
+          <ToastContainer />
+        </div>
+      </DialogProvider>
+    </LoadingProvider>
   );
 }
 

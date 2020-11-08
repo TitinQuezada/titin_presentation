@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { Collections } from '../../../enums/collections';
@@ -6,26 +6,53 @@ import { GetPaginatedDocuments } from '../../../helpers/CloudFireStoreHelper';
 import PaginationComponent from '../../pagination/PaginationComponent';
 import PropTypes from 'prop-types';
 import './LanguajesTable.css';
+import { getPageNumbers } from '../../../helpers/PaginationHelper';
+import { DialogContext } from '../../../context/DialogContext';
+import DeleteLanguaje from '../delete_languaje/DeleteLanguaje';
+import { LoadingContext } from '../../../context/LoadingContext';
 
-const LanguajesTable = ({ registerPerPage }) => {
+const LanguajesTable = () => {
   const [languajes, setLanguajes] = useState([]);
   const [pagesNunmber, setPagesNunmber] = useState(0);
   const firstPage = 1;
+  const pageSizeOptionsFirstPosition = 0;
+  const [pageSizeOptions] = useState([1, 5, 10]);
+  const { setModalContent, setIsModalOpen } = useContext(DialogContext);
+  const [pageSize, setPageSize] = useState(pageSizeOptions[pageSizeOptionsFirstPosition]);
+  const { setIsLoading } = useContext(LoadingContext);
+
 
   useEffect(() => {
-    GetPaginatedDocuments(Collections.languajes, registerPerPage, firstPage).then(({ documents, documentsNumber }) => {
+    setIsLoading(true);
+    GetPaginatedDocuments(Collections.languajes, pageSize, firstPage).then(({ documents, documentsNumber }) => {
+      const pagesNumber = getPageNumbers(documentsNumber, pageSize);
+
       setLanguajes(documents);
-      setPagesNunmber(documentsNumber);
+      setPagesNunmber(pagesNumber);
+      setIsLoading(false);
     });
 
-  }, [registerPerPage])
+  }, [pageSizeOptions, setIsLoading, pageSize]);
 
-  const getPage = async (page) => {
-    const { documents, documentsNumber } = await GetPaginatedDocuments(Collections.languajes, registerPerPage, page);
+  const getPage = async (page, pageSize = pageSizeOptions[pageSizeOptionsFirstPosition]) => {
+    const { documents, documentsNumber } = await GetPaginatedDocuments(Collections.languajes, pageSize, page);
+    const pagesNumber = getPageNumbers(documentsNumber, pageSize);
 
+    setPageSize(pageSize);
     setLanguajes(documents);
-    setPagesNunmber(documentsNumber);
+    setPagesNunmber(pagesNumber);
   };
+
+  const openDeleteLanguajeDialog = (languaje) => {
+    setModalContent(<DeleteLanguaje languaje={languaje} cancel={closeDeleteLanguajeDialog} />);
+
+    setIsModalOpen(true);
+  };
+
+  const closeDeleteLanguajeDialog = async () => {
+    await getPage(firstPage, pageSize);
+    setIsModalOpen(false);
+  }
 
   return (
     <React.Fragment>
@@ -59,7 +86,7 @@ const LanguajesTable = ({ registerPerPage }) => {
                           <i className='far fa-edit'></i>
                         </button>
 
-                        <button className='btn btn-outline-danger'>
+                        <button className='btn btn-outline-danger' onClick={() => openDeleteLanguajeDialog(languaje)}>
                           <i className='far fa-trash-alt'></i>
                         </button>
                       </div>
@@ -79,8 +106,7 @@ const LanguajesTable = ({ registerPerPage }) => {
 
       <PaginationComponent
         pagesNumber={pagesNunmber}
-        registerPerPage={registerPerPage}
-        onChange={getPage}
+        onChange={getPage} pageSizeOptions={pageSizeOptions}
       ></PaginationComponent>
     </React.Fragment>
   );

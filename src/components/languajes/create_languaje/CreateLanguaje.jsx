@@ -47,17 +47,14 @@ const CreateLanguaje = ({ cancel }) => {
                 const languaje = buildLanguaje();
                 await AddDocument(Collections.languajes, languaje);
                 toast.success('Se ha creado el lenguaje con exito!');
-            } catch (error) {
+            } catch {
                 toast.error('Ha ocurrido un error creando el lenguaje en Firebase');
             }
         }
     };
 
     const buildLanguaje = () => {
-        const languaje = {
-            name,
-            image
-        }
+        const languaje = { name, image };
 
         return languaje;
     }

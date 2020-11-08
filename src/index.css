@@ -1,5 +1,6 @@
 @import '../node_modules/bootstrap/dist/css/bootstrap.css';
 @import '../node_modules/react-toastify/dist/ReactToastify.css';
+@import '../node_modules/react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
 body {
   background-color: #ececec;
