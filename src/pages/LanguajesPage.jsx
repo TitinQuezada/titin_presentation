@@ -46,7 +46,7 @@ const LanguajesPage = () => {
         </div>
       </div>
 
-      <LanguajesTable registerPerPage={10} />
+      <LanguajesTable registerPerPage={1} />
     </React.Fragment>
   );
 };
