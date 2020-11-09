@@ -30,13 +30,19 @@ const buildDocuments = (documents) => {
     return documents.map(document => ({ id: document.id, ...document.data() }));
 };
 
-export const GetDocument = () => { };
+export const GetDocument = async (collectionName, filter) => {
+
+
+};
 
 export const AddDocument = async (collectionName, document) => {
     await firebase.firestore().collection(collectionName).add(document);
 };
 
-export const UpdateDocument = () => { };
+export const UpdateDocument = async (collectionName, document) => {
+    const { id, name, image } = document;
+    await firebase.firestore().collection(collectionName).doc(id).update({ name, image });
+};
 
 export const DeleteDocument = async (collectionName, documentId) => {
     const documentReference = firebase.firestore().collection(collectionName).doc(documentId);

@@ -1,19 +1,22 @@
-import React, { useRef } from 'react';
-import './CreateLanguaje.css'
+import React, { useContext, useRef } from 'react';
+import './UpdateLanguaje.css'
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
-import { AddDocument } from '../../../helpers/CloudFireStoreHelper';
+import { UpdateDocument } from '../../../helpers/CloudFireStoreHelper';
 import { Collections } from '../../../enums/collections';
+import { LoadingContext } from '../../../context/LoadingContext';
 
-const CreateLanguaje = ({ cancel }) => {
+const UpdateLanguaje = ({ languaje, cancel }) => {
     const defaultImageName = 'Buscar';
     const fileInputRef = useRef();
-    const [imageName, setImageName] = useState(defaultImageName);
-    const [name, setName] = useState('');
-    const [image, setImage] = useState();
+    const [imageName, setImageName] = useState(`${languaje.name}.png`);
+    const [name, setName] = useState(languaje.name);
+    const [image, setImage] = useState(languaje.image);
     const [nameError, setnameError] = useState('');
     const [imageError, setImageError] = useState('');
+    const { setIsLoading } = useContext(LoadingContext);
+
 
     const openBrowser = () => {
         fileInputRef.current.click();
@@ -39,31 +42,27 @@ const CreateLanguaje = ({ cancel }) => {
         }
     };
 
-    const createLanguaje = async () => {
+    const updateLanguaje = async () => {
         const isFormValid = validateForm();
 
         if (isFormValid) {
             try {
+                setIsLoading(true);
                 const languaje = buildLanguaje();
-                await AddDocument(Collections.languajes, languaje);
-                cleanForm();
-                toast.success('Se ha creado el lenguaje con exito!');
+                await UpdateDocument(Collections.languajes, languaje);
+                setIsLoading(false);
+                cancel();
+                toast.success('Se ha actualizado el lenguaje con exito!');
             } catch {
-                toast.error('Ha ocurrido un error creando el lenguaje en Firebase');
+                toast.error('Ha ocurrido un error actualizando el lenguaje en Firebase');
             }
         }
     };
 
-    const cleanForm = () => {
-        setName('');
-        setImage();
-        setImageName(defaultImageName);
-    }
-
     const buildLanguaje = () => {
-        const languaje = { name, image };
+        const languajeResult = { id: languaje.id, name, image };
 
-        return languaje;
+        return languajeResult;
     }
 
     const validateForm = () => {
@@ -93,7 +92,7 @@ const CreateLanguaje = ({ cancel }) => {
 
     return (
         <React.Fragment>
-            <h4 className='text-center mb-3'>Crear lenguaje</h4>
+            <h4 className='text-center mb-3'>Actualizar lenguaje</h4>
             <div className="form-group">
                 <label>Nombre</label>
                 <input className="form-control" placeholder="Nombre del lenguaje" onChange={({ target }) => setName(target.value)} value={name} />
@@ -119,15 +118,16 @@ const CreateLanguaje = ({ cancel }) => {
             <div className="row mt-5">
                 <div className="col-12 d-flex justify-content-end">
                     <button className="btn btn-danger mr-3" onClick={cancel}>Cancelar</button>
-                    <button className="btn btn-primary" onClick={createLanguaje}>Agregar</button>
+                    <button className="btn btn-primary" onClick={updateLanguaje}>Actualizar</button>
                 </div>
             </div>
         </React.Fragment>
     );
 }
 
-CreateLanguaje.propTypes = {
+UpdateLanguaje.propTypes = {
+    languaje: PropTypes.object.isRequired,
     cancel: PropTypes.func.isRequired
 }
 
-export default CreateLanguaje;
+export default UpdateLanguaje;

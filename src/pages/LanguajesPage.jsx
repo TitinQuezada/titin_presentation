@@ -4,6 +4,8 @@ import CreateLanguaje from '../components/languajes/create_languaje/CreateLangua
 import LanguajesTable from '../components/languajes/languajes_table/LanguajesTable';
 import NavbarComponent from '../components/navbar/NavbarComponent';
 import { DialogContext } from '../context/DialogContext';
+import { Collections } from '../enums/collections';
+import { GetDocument } from '../helpers/CloudFireStoreHelper';
 
 const LanguajesPage = () => {
   const history = useHistory();
@@ -31,7 +33,7 @@ const LanguajesPage = () => {
       <div className="row">
         <div className='col-6'>
           <div className='input-group mb-3'>
-            <input type='text' className='form-control' placeholder='Buscar' />
+            <input type='text' className='form-control' placeholder='Buscar' onChange={({ target }) => GetDocument(Collections.languajes, target.value)} />
 
             <div className='input-group-append'>
               <button className='btn btn-outline-secondary input-group-text'>

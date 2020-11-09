@@ -1,14 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './DeleteLanguaje.css';
 import PropTypes from 'prop-types';
 import { DeleteDocument } from '../../../helpers/CloudFireStoreHelper';
 import { Collections } from '../../../enums/collections';
+import { LoadingContext } from '../../../context/LoadingContext';
+import { toast } from 'react-toastify';
 
 const DeleteLanguaje = ({ languaje, cancel }) => {
+    const { setIsLoading } = useContext(LoadingContext);
 
     const deleteDocument = async () => {
-        await DeleteDocument(Collections.languajes, languaje.id);
-        cancel();
+        try {
+            setIsLoading(true);
+            await DeleteDocument(Collections.languajes, languaje.id);
+            cancel();
+            setIsLoading(false);
+        } catch {
+            toast.error('Ha ocurrido un error eliminando el lenguaje en Firebase');
+        }
     };
 
     return (
