@@ -7,17 +7,27 @@ const LoginComponent = () => {
   const history = useHistory();
 
   useEffect(() => {
-    AuthenticationService.Authenticate()
-      .then(() => {
+    const authenticate = () => {
+      AuthenticationService.Authenticate()
+        .then(() => {
+          history.push('/back-office');
+        })
+        .catch((error) => {
+          alert(error.message);
+          history.push('/');
+        });
+    };
+
+    AuthenticationService.IsAuthenticate().then((isAuthenticate) => {
+      if (!isAuthenticate) {
+        authenticate();
+      } else {
         history.push('/back-office');
-      })
-      .catch((error) => {
-        alert(error.message);
-        history.push('/');
-      });
+      }
+    });
   }, [history]);
 
-  return <> </>;
+  return <React.Fragment></React.Fragment>;
 };
 
 export default LoginComponent;

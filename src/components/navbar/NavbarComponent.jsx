@@ -2,21 +2,29 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './NavbarComponent.css';
+import authenticationService from '../../services/authenticationService';
 
 const NavbarComponent = ({ title, onClick }) => {
   const history = useHistory();
 
-  const logOut = () => history.push('/');
+  const logOut = async () => {
+    try {
+      await authenticationService.LogOut();
+      history.push('/');
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   return (
-    <nav className='row navbar navbar-light bg-primary'>
-      <div className='col'>
-        <h1 onClick={onClick} className='navbar-brand text-white pointer'>
+    <nav className="row navbar navbar-light bg-primary">
+      <div className="col">
+        <h1 onClick={onClick} className="navbar-brand text-white pointer">
           {title}
         </h1>
       </div>
-      <div className='col'>
-        <button onClick={logOut} className='btn text-white float-right'>
+      <div className="col">
+        <button onClick={logOut} className="btn text-white float-right">
           Cerrar Session
         </button>
       </div>
