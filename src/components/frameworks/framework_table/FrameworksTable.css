@@ -1,0 +1,11 @@
+thead {
+  text-align: center;
+}
+
+tbody {
+  text-align: center;
+}
+
+.vertical-aling-center {
+  vertical-align: middle !important;
+}
