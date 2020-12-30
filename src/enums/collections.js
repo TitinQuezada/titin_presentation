@@ -1,3 +1,4 @@
 export const Collections = {
-    languajes: 'languajes'
-}
+  languajes: 'languajes',
+  profiles: 'profiles',
+};

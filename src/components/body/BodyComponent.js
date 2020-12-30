@@ -4,7 +4,7 @@ import { GetAllDocuments } from '../../helpers/CloudFireStoreHelper';
 import CardComponent from '../card/CardComponent';
 
 const BodyComponent = () => {
-  const [languajes, setLanguajes] = useState([])
+  const [languajes, setLanguajes] = useState([]);
 
   const frameworks = [
     {
@@ -59,23 +59,22 @@ const BodyComponent = () => {
   ];
 
   useEffect(() => {
-    GetAllDocuments(Collections.languajes).then(documents => {
+    GetAllDocuments(Collections.languajes).then((documents) => {
       setLanguajes(documents);
     });
-
   }, []);
 
   return (
-    <div className='row mt-3 mb-3 mb-sm-0'>
-      <div className='col'>
-        <div className='row justify-content-center'>
+    <div className="row mt-3 mb-3 mb-sm-0">
+      <div className="col">
+        <div className="row justify-content-center">
           <h5>Lenguajes de programacion</h5>
         </div>
 
-        <div className='row'>
+        <div className="row">
           {languajes.map((languaje) => (
             <div
-              className='col-6 col-md-5 col-lg-4 col-xl-3 mt-3'
+              className="col-6 col-md-5 col-lg-4 col-xl-3 mt-3"
               key={languaje.id}
             >
               <CardComponent
@@ -88,17 +87,17 @@ const BodyComponent = () => {
         </div>
       </div>
 
-      <div className='col-0 col-sm-1 border-left border-right'></div>
+      <div className="col-0 col-sm-1 border-left border-right"></div>
 
-      <div className='col mt-5 mt-sm-0'>
-        <div className='row justify-content-center'>
+      <div className="col mt-5 mt-sm-0">
+        <div className="row justify-content-center">
           <h5>Frameworks</h5>
         </div>
 
-        <div className='row'>
+        <div className="row">
           {frameworks.map((framework) => (
             <div
-              className='col-6 col-md-5 col-lg-4 col-xl-3 mt-3'
+              className="col-6 col-md-5 col-lg-4 col-xl-3 mt-3"
               key={framework.id}
             >
               <CardComponent
