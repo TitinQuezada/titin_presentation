@@ -26,6 +26,8 @@ class AuthenticationService {
 
         throw error;
       }
+
+      localStorage.setItem('isAuthenticate', true);
     } catch (error) {
       if (error.code !== 'auth/popup-closed-by-user') {
         throw error;
@@ -63,6 +65,8 @@ class AuthenticationService {
 
   LogOut = async () => {
     await firebase.auth().signOut();
+
+    localStorage.removeItem('isAuthenticate');
   };
 }
 

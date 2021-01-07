@@ -10,6 +10,7 @@ const NavbarComponent = ({ title, onClick }) => {
   const logOut = async () => {
     try {
       await authenticationService.LogOut();
+
       history.push('/');
     } catch (error) {
       alert(error.message);

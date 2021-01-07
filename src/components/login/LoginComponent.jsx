@@ -5,7 +5,6 @@ import './LoginComponent.css';
 
 const LoginComponent = () => {
   const history = useHistory();
-
   useEffect(() => {
     const authenticate = () => {
       AuthenticationService.Authenticate()
